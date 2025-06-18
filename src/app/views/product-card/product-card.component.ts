@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Product} from '../../models/product.model';
-import {MatCardModule} from '@angular/material/card';
+import {MatCard, MatCardContent, MatCardModule, MatCardTitle} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 
 @Component({
@@ -9,8 +9,10 @@ import {MatButtonModule} from '@angular/material/button';
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCard,
+    MatCardTitle,
+    MatCardContent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
