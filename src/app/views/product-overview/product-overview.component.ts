@@ -2,12 +2,14 @@ import {Component, inject, signal} from '@angular/core';
 import {Product} from '../../models/product.model';
 import {ProductService} from '../../services/product.service';
 import {ProductCardComponent} from '../product-card/product-card.component';
+import {VendingPanelComponent} from '../vending-panel/vending-panel.component';
 
 @Component({
   selector: 'app-product-overview',
   standalone: true,
   imports: [
-    ProductCardComponent
+    ProductCardComponent,
+    VendingPanelComponent
   ],
   template: `
     <h2>Verfügbare Produkte</h2>
@@ -18,6 +20,8 @@ import {ProductCardComponent} from '../product-card/product-card.component';
     } @else {
       <p>Keine Produkte verfügbar.</p>
     }
+
+    <app-vending-panel />
   `
 })
 export class ProductOverviewComponent {
