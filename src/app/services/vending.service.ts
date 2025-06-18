@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {map, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,8 @@ export class VendingService {
    * Insert a coin into the vending machine
    * POST /vendingmachine/coin
    */
-  insertCoin(amount: number): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/coin`, {amount});
+  insertCoin(coin: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/coin`, { coin });
   }
 
   /**
@@ -22,7 +22,8 @@ export class VendingService {
    * GET /vendingmachine/balance
    */
   getBalance(): Observable<number> {
-    return this.http.get<number>(`${this.baseUrl}/balance`);
+    return this.http.get<{ amount: number }>(`${this.baseUrl}/balance`).pipe(
+      map(res => res.amount));
   }
 
   /**

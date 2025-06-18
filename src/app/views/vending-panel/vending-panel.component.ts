@@ -1,10 +1,11 @@
-import {Component, inject, signal} from '@angular/core';
-import {VendingService} from '../../services/vending.service';
+import { Component, inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { VendingService } from '../../services/vending.service';
 
 @Component({
   selector: 'app-vending-panel',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   template: `
     <h3>Münzeinwurf</h3>
     <div class="buttons">
@@ -15,6 +16,8 @@ import {VendingService} from '../../services/vending.service';
       }
     </div>
 
+    <p>Aktuelles Guthaben: {{ balance() | number:'1.2-2' }} CHF</p>
+
     @if (message()) {
       <p>{{ message() }}</p>
     }
@@ -23,22 +26,44 @@ import {VendingService} from '../../services/vending.service';
 })
 export class VendingPanelComponent {
   private vendingService = inject(VendingService);
+
+  coins = ['TEN_RAPPEN', 'TWENTY_RAPPEN', 'FIFTY_RAPPEN', 'ONE_CHF', 'TWO_CHF'];
+
+  balance = signal<number>(0);
   message = signal<string | null>(null);
 
-  coins = [0.1, 0.2, 0.5, 1.0, 2.0]
-
-  insert(amount: number) {
-    this.vendingService.insertCoin(amount).subscribe({
-      next: () => {
-        this.message.set(` ${this.coinLabel(amount)} CHF eingeworfen`)
-      },
-      error: () => {
-        this.message.set(`Fehler beim Einwerfen der Münze`)
-      }
-    })
+  constructor() {
+    this.loadBalance();
   }
 
-  coinLabel(value: number) {
-    return value < 1 ? `${value * 100} Rp` : `${value} CHF`;
+  insert(coin: string) {
+    this.vendingService.insertCoin(coin).subscribe({
+      next: () => {
+        this.message.set(`${this.coinLabel(coin)} CHF eingeworfen`);
+        this.loadBalance();
+      },
+      error: () => {
+        this.message.set('Fehler beim Einwerfen der Münze');
+      }
+    });
+  }
+
+  loadBalance() {
+    this.vendingService.getBalance().subscribe({
+      next: (res) => this.balance.set(res),
+      error: () => {
+        this.message.set('Fehler beim Abrufen des Guthabens');
+      }
+    });
+  }
+
+  coinLabel(code: string) {
+    return {
+      TEN_RAPPEN: '10 Rp',
+      TWENTY_RAPPEN: '20 Rp',
+      FIFTY_RAPPEN: '50 Rp',
+      ONE_CHF: '1 CHF',
+      TWO_CHF: '2 CHF'
+    }[code] ?? code;
   }
 }
