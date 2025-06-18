@@ -14,18 +14,21 @@ import {MatButtonModule} from '@angular/material/button';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="card">
-      <h3>{{ product.name }}</h3>
-      <p>Preis: {{ product.price.toFixed(2) }} CHF</p>
-      <p>Lager: {{ product.inventory }}</p>
+    <mat-card>
+      <mat-card-title>{{ product.name }}</mat-card-title>
+      <mat-card-content>
+        <p>Preis: {{ product.price.toFixed(2) }} CHF</p>
+        <p>Lager: {{ product.inventory }}</p>
+      </mat-card-content>
+    </mat-card>
 
-      <button
-        [disabled]="product.inventory === 0"
-        (click)="onBuy()"
-      >
-        {{ product.inventory > 0 ? 'Kaufen' : 'Ausverkauft' }}
-      </button>
-    </div>
+
+    <button mat-raised-button
+            color="primary"
+            [disabled]="product.inventory === 0"
+            (click)="onBuy()">
+      {{ product.inventory > 0 ? 'Kaufen' : 'Ausverkauft' }}
+    </button>
   `,
   styleUrl: './product-card.component.scss'
 })

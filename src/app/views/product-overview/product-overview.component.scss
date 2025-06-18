@@ -1,26 +1,19 @@
-.vending-machine {
-  display: flex;
-  gap: 2rem;
-  padding: 2rem;
-  justify-content: center;
-  align-items: flex-start;
-
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1rem;
-    width: 600px;
-    border: 2px solid #ccc;
-    padding: 1rem;
-    background-color: #f9f9f9;
-  }
-
-  .vending-panel {
-    width: 300px;
-  }
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
-.title {
+h2 {
   text-align: center;
-  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  margin: 1rem 0;
 }

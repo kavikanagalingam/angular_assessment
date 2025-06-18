@@ -11,7 +11,7 @@ import {MatButtonModule} from '@angular/material/button';
     MatButtonModule
   ],
   template: `
-    <h3>Münzeinwurf</h3>
+    <h3>Wallet</h3>
     <div class="buttons">
       @for (coin of coins; track coin) {
         <button (click)="insert(coin)">

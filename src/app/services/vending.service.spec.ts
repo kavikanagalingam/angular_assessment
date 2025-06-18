@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { VendingService } from './vending.service';
+import {VendingService} from './vending.service';
 import {provideHttpClient} from '@angular/common/http';
 import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
 
@@ -26,18 +26,20 @@ describe('VendingService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-/*
-  it('should insert coin', () => {
+
+  it('should insert coin', (done) => {
     service.insertCoin('ONE_CHF').subscribe({
-      next: (res) => expect(res).toBeUndefined()
+      next: (res) => {
+        done();
+      }
     });
 
     const req = httpMock.expectOne('/vendingmachine/coin');
     expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual({ coin: 'ONE_CHF' });
+    expect(req.request.body).toEqual({coin: 'ONE_CHF'});
     req.flush(null);
   });
-*/
+
   it('should get current balance', () => {
     service.getBalance().subscribe(balance => {
       expect(balance).toBe(4.4);
@@ -45,14 +47,14 @@ describe('VendingService', () => {
 
     const req = httpMock.expectOne('/vendingmachine/balance');
     expect(req.request.method).toBe('GET');
-    req.flush({ amount: 4.4 });
+    req.flush({amount: 4.4});
   });
 
   it('should refresh balance (signal should update)', () => {
     service.refreshBalance();
 
     const req = httpMock.expectOne('/vendingmachine/balance');
-    req.flush({ amount: 3.5 });
+    req.flush({amount: 3.5});
 
     expect(service.balance()).toBe(3.5);
   });
@@ -65,7 +67,7 @@ describe('VendingService', () => {
     buyReq.flush({});
 
     const balanceReq = httpMock.expectOne('/vendingmachine/balance');
-    balanceReq.flush({ amount: 1.0 });
+    balanceReq.flush({amount: 1.0});
     expect(service.balance()).toBe(1.0);
   });
 
@@ -77,8 +79,7 @@ describe('VendingService', () => {
     resetReq.flush(null);
 
     const balanceReq = httpMock.expectOne('/vendingmachine/balance');
-    balanceReq.flush({ amount: 0 });
+    balanceReq.flush({amount: 0});
     expect(service.balance()).toBe(0);
   });
-
 });

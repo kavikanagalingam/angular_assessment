@@ -30,8 +30,8 @@ describe('ProductService', () => {
 
   it('should fetch all products', () => {
     const mockProducts: Product[] = [
-      { id: '1', name: 'Coke', price: 2.5, inventory: 10 },
-      { id: '2', name: 'Pepsi', price: 2.0, inventory: 5 }
+      {id: '1', name: 'Coke', price: 2.5, inventory: 10},
+      {id: '2', name: 'Pepsi', price: 2.0, inventory: 5}
     ];
 
     service.getAllProducts().subscribe((products) => {
@@ -41,11 +41,11 @@ describe('ProductService', () => {
 
     const req = httpMock.expectOne('/products');
     expect(req.request.method).toBe('GET');
-    req.flush({ products: mockProducts });
+    req.flush({products: mockProducts});
   });
 
   it('should fetch a product by ID', () => {
-    const mockProduct: Product = { id: '1', name: 'Coke', price: 2.5, inventory: 10 };
+    const mockProduct: Product = {id: '1', name: 'Coke', price: 2.5, inventory: 10};
 
     service.getProductById('1').subscribe((product) => {
       expect(product).toEqual(mockProduct);
