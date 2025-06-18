@@ -49,7 +49,7 @@ export class VendingPanelComponent {
   insert(coin: string) {
     this.vendingService.insertCoin(coin).subscribe({
       next: () => {
-        this.message.set(`${this.coinLabel(coin)} CHF eingeworfen`);
+        this.message.set(`${this.coinLabel(coin)} eingeworfen`);
         this.loadBalance();
       },
       error: () => {
