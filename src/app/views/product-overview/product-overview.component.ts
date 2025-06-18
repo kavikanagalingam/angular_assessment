@@ -13,19 +13,21 @@ import {VendingService} from '../../services/vending.service';
     VendingPanelComponent
   ],
   template: `
-    <div class="container">
-      <h2>Vending Machine</h2>
-      @if (products().length > 0) {
-        <div class="grid">
-          @for (product of products(); track product.id) {
-            <app-product-card [product]="product" (buy)="onBuy($event)"/>
-          }
-        </div>
-      } @else {
-        <p>Keine Produkte verfügbar.</p>
-      }
+    <div class="layout">
+      <div class="product-grid">
+        <h2>Vending Machine</h2>
+        @if (products().length > 0) {
+          <div class="grid">
+            @for (product of products(); track product.id) {
+              <app-product-card [product]="product" (buy)="onBuy($event)"/>
+            }
+          </div>
+        } @else {
+          <p>Keine Produkte verfügbar.</p>
+        }
+      </div>
+      <app-vending-panel class="wallet-panel"/>
     </div>
-    <app-vending-panel/>
   `,
   styleUrls: ['./product-overview.component.scss']
 })

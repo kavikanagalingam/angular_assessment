@@ -1,7 +1,21 @@
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
+.layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 2rem;
+  max-width: 90%;
+  margin-inline: auto;
+}
+.product-grid {
+  flex: 2;
+  min-width: 0;
+}
+
+.wallet-panel {
+  flex: 1;
+  max-width: 300px;
 }
 
 h2 {
@@ -13,7 +27,7 @@ h2 {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
   margin: 1rem 0;
 }

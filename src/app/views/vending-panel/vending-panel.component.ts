@@ -2,19 +2,22 @@ import {Component, inject, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {VendingService} from '../../services/vending.service';
 import {MatButtonModule} from '@angular/material/button';
+import {MatCard, MatCardTitle} from '@angular/material/card';
 
 @Component({
   selector: 'app-vending-panel',
   standalone: true,
   imports: [
     CommonModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCard,
+    MatCardTitle
   ],
   template: `
-    <h3>Wallet</h3>
+    <mat-card-title>Wallet</mat-card-title>
     <div class="buttons">
       @for (coin of coins; track coin) {
-        <button (click)="insert(coin)">
+        <button  mat-raised-button color="accent" (click)="insert(coin)">
           {{ coinLabel(coin) }}
         </button>
       }
@@ -22,7 +25,7 @@ import {MatButtonModule} from '@angular/material/button';
 
     <p>Aktuelles Guthaben: {{ balance() | number:'1.2-2' }} CHF</p>
 
-    <button (click)="resetTransaction()">Zurücksetzen</button>
+    <button mat-stroked-button color="warn" class="btn-reset" (click)="resetTransaction()">Zurücksetzen</button>
 
     @if (message()) {
       <p>{{ message() }}</p>
