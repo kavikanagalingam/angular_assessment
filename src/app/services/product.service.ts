@@ -8,14 +8,21 @@ export class ProductService {
   private http = inject(HttpClient);
   private baseUrl = '/products';
 
-  // GET /products
+  /**
+   * Get all current Products
+   * GET /products
+   */
   getAllProducts(): Observable<Product[]> {
     return this.http.get<{ products: Product[] }>(this.baseUrl).pipe(
       map(response => response.products)
     );
   }
 
-  // GET /products/{id}
+  /**
+   * Get a specific product identified by productId
+   * @param id
+   * GET /products/{id}
+   */
   getProductById(id: string): Observable<Product> {
     return this.http.get<Product>(`${this.baseUrl}/${id}`);
   }
