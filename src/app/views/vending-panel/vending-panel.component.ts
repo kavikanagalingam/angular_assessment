@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {VendingService} from '../../services/vending.service';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCard, MatCardTitle} from '@angular/material/card';
+import {RouterModule} from '@angular/router';
 
 @Component({
   selector: 'app-vending-panel',
@@ -11,7 +12,8 @@ import {MatCard, MatCardTitle} from '@angular/material/card';
     CommonModule,
     MatButtonModule,
     MatCard,
-    MatCardTitle
+    MatCardTitle,
+    RouterModule,
   ],
   template: `
     <mat-card-title>Wallet</mat-card-title>
@@ -30,6 +32,11 @@ import {MatCard, MatCardTitle} from '@angular/material/card';
     @if (message()) {
       <p>{{ message() }}</p>
     }
+
+    <button mat-stroked-button color="primary" [routerLink]="['/admin']">
+      Admin
+    </button>
+
   `,
   styleUrl: './vending-panel.component.scss'
 })
