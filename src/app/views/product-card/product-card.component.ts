@@ -1,12 +1,18 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Product} from '../../models/product.model';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [CommonModule],
-  changeDetection:ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="card">
       <h3>{{ product.name }}</h3>

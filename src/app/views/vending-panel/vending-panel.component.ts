@@ -1,11 +1,15 @@
-import {Component, computed, inject, signal} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { VendingService } from '../../services/vending.service';
+import {Component, inject, signal} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {VendingService} from '../../services/vending.service';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-vending-panel',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    MatButtonModule
+  ],
   template: `
     <h3>Münzeinwurf</h3>
     <div class="buttons">
@@ -70,9 +74,9 @@ export class VendingPanelComponent {
     }[code] ?? code;
   }
 
-  resetTransaction(){
+  resetTransaction() {
     this.vendingService.resetCoins().subscribe({
-      next:() => {
+      next: () => {
         this.message.set('Münzen wurden zurückgegeben');
         this.loadBalance();
       },

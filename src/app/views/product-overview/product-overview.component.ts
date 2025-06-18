@@ -13,7 +13,7 @@ import {VendingService} from '../../services/vending.service';
     VendingPanelComponent
   ],
   template: `
-    <h2>Verfügbare Produkte</h2>
+    <h2>Vending Machine</h2>
     @if (products().length > 0) {
       @for (product of products(); track product.id) {
         <app-product-card [product]="product"
@@ -23,9 +23,9 @@ import {VendingService} from '../../services/vending.service';
     } @else {
       <p>Keine Produkte verfügbar.</p>
     }
-
     <app-vending-panel/>
-  `
+  `,
+  styleUrls: ['./product-overview.component.scss']
 })
 export class ProductOverviewComponent {
   products = signal<Product[]>([]);
@@ -33,6 +33,9 @@ export class ProductOverviewComponent {
 
   private productService = inject(ProductService);
   private vendingService = inject(VendingService);
+  readonly MAX_SLOTS = 25;
+
+  slots = signal<(Product | null)[]>([])
 
   constructor() {
     this.loadProducts();

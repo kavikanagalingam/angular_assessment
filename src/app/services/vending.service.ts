@@ -16,7 +16,7 @@ export class VendingService {
    * POST /vendingmachine/coin
    */
   insertCoin(coin: string): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/coin`, { coin });
+    return this.http.post<void>(`${this.baseUrl}/coin`, {coin});
   }
 
   /**
@@ -28,6 +28,9 @@ export class VendingService {
       map(res => res.amount));
   }
 
+  /**
+   * Refreshes the balance
+   */
   refreshBalance() {
     this.getBalance().subscribe({
       next: (res) => this.balance.set(res),
