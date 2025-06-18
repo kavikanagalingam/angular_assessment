@@ -1,6 +1,6 @@
-import {inject, Injectable} from '@angular/core';
+import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map, Observable} from 'rxjs';
+import {map, Observable, tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,8 @@ import {map, Observable} from 'rxjs';
 export class VendingService {
   private http = inject(HttpClient);
   private baseUrl = '/vendingmachine';
+
+  balance = signal<number>(0);
 
   /**
    * Insert a coin into the vending machine
@@ -26,12 +28,21 @@ export class VendingService {
       map(res => res.amount));
   }
 
+  refreshBalance() {
+    this.getBalance().subscribe({
+      next: (res) => this.balance.set(res),
+      error: () => console.error('Fehler beim Abrufen des Guhabens')
+    })
+  }
+
   /**
    * Buy product by ID
    * GET /vendingmachine/product/{productId}
    */
   buyProduct(productId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/product/${productId}`);
+    return this.http.get(`${this.baseUrl}/product/${productId}`).pipe(
+      tap(() => this.refreshBalance())
+    );
   }
 
   /**
@@ -39,7 +50,8 @@ export class VendingService {
    * DELETE /vendingmachine/coin
    */
   resetCoins(): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/coin`);
+    return this.http.delete<void>(`${this.baseUrl}/coin`).pipe(
+      tap(() => this.refreshBalance())
+    );
   }
-
 }

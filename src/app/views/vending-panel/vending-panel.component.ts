@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import {Component, computed, inject, signal} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VendingService } from '../../services/vending.service';
 
@@ -18,6 +18,8 @@ import { VendingService } from '../../services/vending.service';
 
     <p>Aktuelles Guthaben: {{ balance() | number:'1.2-2' }} CHF</p>
 
+    <button (click)="resetTransaction()">Zurücksetzen</button>
+
     @if (message()) {
       <p>{{ message() }}</p>
     }
@@ -29,8 +31,9 @@ export class VendingPanelComponent {
 
   coins = ['TEN_RAPPEN', 'TWENTY_RAPPEN', 'FIFTY_RAPPEN', 'ONE_CHF', 'TWO_CHF'];
 
-  balance = signal<number>(0);
   message = signal<string | null>(null);
+
+  balance = this.vendingService.balance;
 
   constructor() {
     this.loadBalance();
@@ -66,4 +69,17 @@ export class VendingPanelComponent {
       TWO_CHF: '2 CHF'
     }[code] ?? code;
   }
+
+  resetTransaction(){
+    this.vendingService.resetCoins().subscribe({
+      next:() => {
+        this.message.set('Münzen wurden zurückgegeben');
+        this.loadBalance();
+      },
+      error: () => {
+        this.message.set('Fehler beim Zurücksetzen.')
+      }
+    })
+  }
+
 }
